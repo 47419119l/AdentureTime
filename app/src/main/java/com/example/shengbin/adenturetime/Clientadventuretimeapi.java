@@ -50,7 +50,7 @@ public class Clientadventuretimeapi {
          */
 
             for (int i =1; i<50; i++) {
-                Call<Characters> advtCall = service.characters(String.valueOf(1));
+                Call<Characters> advtCall = service.characters(String.valueOf(i));
 
                 advtCall.enqueue(new Callback<Characters>() {
                     @Override
@@ -78,11 +78,46 @@ public class Clientadventuretimeapi {
             }
     }
 
+
     /**
      * Metode per extreure els episodis.
      * @param adapter
      */
-    public void getEpisodes(final ArrayAdapter<Characters> adapter){
+    public void getEpisodes(final ArrayAdapter<Episode> adapter){
+        /**
+         *
+         * Igual que en els characters si fem una crida a els episodis no ens mostra tots els episodis i alguns tenen camps incomplerts
+         * per tant farem una crida als primer 50 episodis.
+         *
+         */
+
+        for (int i =1; i<50; i++) {
+            Call<Episode> advtCall = service.episodes(String.valueOf(i));
+
+            advtCall.enqueue(new Callback<Episode>() {
+                @Override
+                public void onResponse(Response<Episode> response, Retrofit retrofit) {
+                    if (response.isSuccess()) {
+                        Episode episode = response.body();
+                        adapter.clear();
+                            /*
+                            Si no té imatge no l'afguim al adptador si té imatge si.
+                             */
+                        if (episode.getTitleCard().equals("")) {
+
+                        } else {
+                            adapter.add(episode);
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Throwable t) {
+                    Log.w(null, Arrays.toString(t.getStackTrace()));
+                }
+            });
+        }
 
     }
 
@@ -93,8 +128,10 @@ public class Clientadventuretimeapi {
             @Path("id")String id
         );
 
-        @GET("episodes")
-        Call <Episode> episodes();
+        @GET("episodes/{id}")
+        Call <Episode> episodes(
+                @Path("id")String id
+        );
     }
 }
 

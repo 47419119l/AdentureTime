@@ -10,10 +10,10 @@ public class Episode {
     private int seasonId;
     private int episodeId;
     private String link;
-    private String titleCard;
+    private String title_card;
     private String description;
-    private String productionCode;
-    private String airDate;
+    private String production_code;
+    private String air_date;
     private String airDateUtc;
     private String viewers;
     private String created;
@@ -117,7 +117,7 @@ public class Episode {
      * The titleCard
      */
     public String getTitleCard() {
-        return titleCard;
+        return title_card;
     }
 
     /**
@@ -126,7 +126,7 @@ public class Episode {
      * The title_card
      */
     public void setTitleCard(String titleCard) {
-        this.titleCard = titleCard;
+        this.title_card = titleCard;
     }
 
     /**
@@ -153,7 +153,7 @@ public class Episode {
      * The productionCode
      */
     public String getProductionCode() {
-        return productionCode;
+        return production_code;
     }
 
     /**
@@ -162,7 +162,7 @@ public class Episode {
      * The production_code
      */
     public void setProductionCode(String productionCode) {
-        this.productionCode = productionCode;
+        this.production_code = productionCode;
     }
 
     /**
@@ -171,7 +171,7 @@ public class Episode {
      * The airDate
      */
     public String getAirDate() {
-        return airDate;
+        return air_date;
     }
 
     /**
@@ -180,7 +180,7 @@ public class Episode {
      * The air_date
      */
     public void setAirDate(String airDate) {
-        this.airDate = airDate;
+        this.air_date = airDate;
     }
 
     /**

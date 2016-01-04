@@ -29,15 +29,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.shengbin.adenturetime.MainActivity" />
         </activity>
-        <activity
-            android:name=".EpisodesList"
-            android:label="@string/title_activity_episodes_list"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shengbin.adenturetime.MainActivity" />
-        </activity>
     </application>
 
 </manifest>
