@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.shengbin.adenturetime.json.Characters;
+import com.example.shengbin.adenturetime.json.Character;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class CharactersFragment extends Fragment {
 
     private AdaptadorPersonalitzatCharacters adapter;
-    private ArrayList<Characters> items;
+    private ArrayList<Character> items;
     DAOAdventuretimeDB dao = new DAOAdventuretimeDB();
 
     public CharactersFragment() {

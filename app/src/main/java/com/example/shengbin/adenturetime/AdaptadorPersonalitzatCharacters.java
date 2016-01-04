@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.shengbin.adenturetime.json.Characters;
+import com.example.shengbin.adenturetime.json.Character;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -16,15 +16,15 @@ import java.util.ArrayList;
 /**
  * Created by shengbin on 2016/1/4.
  */
-public class AdaptadorPersonalitzatCharacters extends ArrayAdapter<Characters> {
+public class AdaptadorPersonalitzatCharacters extends ArrayAdapter<Character> {
 
-    public AdaptadorPersonalitzatCharacters(Context context, int resource, ArrayList<Characters> items) {
+    public AdaptadorPersonalitzatCharacters(Context context, int resource, ArrayList<Character> items) {
         super(context, resource,items);
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Characters character  =getItem(position);
+        Character character  =getItem(position);
 
         if(convertView==null){
             LayoutInflater inflater = LayoutInflater.from(getContext());

@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.shengbin.adenturetime.json.Episode;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -96,7 +98,8 @@ public class MainActivity extends AppCompatActivity
             i = new Intent(this, CharactersList.class);
             startActivity(i);
         } else if (id == R.id.nav_gallery) {
-
+            i = new Intent(this, Episodes.class);
+            startActivity(i);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

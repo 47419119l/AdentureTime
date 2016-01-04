@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.shengbin.adenturetime.json.Characters;
+import com.example.shengbin.adenturetime.json.Character;
+import com.example.shengbin.adenturetime.json.Episode;
 
 import java.util.ArrayList;
 
@@ -21,11 +22,11 @@ public class DAOAdventuretimeDB {
      */
     DAOAdventuretimeDB(){}
     /**
-     * Metode que retorn un Array List amb tots el registres de la taula CHARACTERS.
+     * Metode que omple un Array List amb tots el registres de la taula CHARACTERS.
      * @param context
      * @param items
      */
-    public void mostrarCharacter(Context context,ArrayList<Characters>items){
+    public void mostrarCharacter(Context context,ArrayList<Character>items){
         String [] character = new String [5];
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
@@ -38,7 +39,7 @@ public class DAOAdventuretimeDB {
                     /**
                      * Creem el objecte l'hi afeguim els seus valors
                      */
-                    Characters cha = new Characters();
+                    Character cha = new Character();
                     cha.setImage(c.getString(5));
                     cha.setCreated(c.getString(4));
                     cha.setFullName( c.getString(3));
@@ -55,6 +56,73 @@ public class DAOAdventuretimeDB {
         }
     }
 
+    /**
+     * Metode que omple ArrayList amb els registres de la taula EPISODES
+     * @param context
+     * @param items
+     */
+    public void mostrarEpisodes(Context context,ArrayList<Episode>items){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT ID, NAME, IMAGE, DESCRIPTION FROM EPISODE ",null);
+
+        try{
+            if(c.moveToFirst()){
+                do{
+                    /**
+                     * Creem el objecte l'hi afeguim els seus valors
+                     */
+                    Episode cha = new Episode();
+                    cha.setDescription(c.getString(3));
+                    cha.setTitleCard(c.getString(2));
+                    cha.setTitle(c.getString(1));
+
+                    /**
+                     * Afeguim objecte al ArrayList.
+                     */
+                    items.add(cha);
+                }while(c.moveToNext());
+            }
+        }catch (Exception ex) {
+
+        }
+    }
+    public void mostrarEpisodeCharacter(Context context,ArrayList<Episode> list, int id_cha){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        /*
+        Creem la consulta.
+         */
+        Cursor c = db.rawQuery("SELECT ID, NAME, IMAGE, DESCRIPTION FROM EPISODE " +
+                "INNER JOIN CHA_EP" +
+                " ON EPISODE.ID = CHA_EP.ID_EP"+
+                " WHERE CHA_EP.ID_CHA = "+id_cha ,null);
+
+        try{
+            if(c.moveToFirst()){
+                do{
+                    /**
+                     * Creem el objecte l'hi afeguim els seus valors
+                     */
+                    Episode cha = new Episode();
+                    cha.setDescription(c.getString(3));
+                    cha.setTitleCard(c.getString(2));
+                    cha.setTitle(c.getString(1));
+
+                    /**
+                     * Afeguim objecte al ArrayList.
+                     */
+                    list.add(cha);
+                }while(c.moveToNext());
+            }
+        }catch (Exception ex) {
+
+        }
+
+    }
     /**
      * Inserta a la taula CHARACTERS un nou registre
      * @param context
@@ -81,7 +149,6 @@ public class DAOAdventuretimeDB {
         db.insert("CHARACTERS", null, registre);
         db.close();
     }
-
     /**
      * Metode per insertar registres a la taula CHA_OC i OCUPATION
      * @param context
@@ -165,7 +232,6 @@ public class DAOAdventuretimeDB {
         registre.put("ID_EP", id_ep);
         db.insert("CHA_EP", null, registre);
         db.close();
-
     }
 
 }

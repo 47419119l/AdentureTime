@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Characters {
+public class Character {
 
 
     private int id;

@@ -19,7 +19,7 @@ public class Episode {
     private String created;
     private String modified;
 
-    private List<Characters> characters = new ArrayList<Characters>();
+    private List<Character> characters = new ArrayList<Character>();
 
     /**
      *
@@ -260,7 +260,7 @@ public class Episode {
      * @return
      * The characters
      */
-    public List<Characters> getCharacters() {
+    public List<Character> getCharacters() {
         return characters;
     }
 
@@ -269,7 +269,7 @@ public class Episode {
      * @param characters
      * The characters
      */
-    public void setCharacters(List<Characters> characters) {
+    public void setCharacters(List<Character> characters) {
         this.characters = characters;
     }
 

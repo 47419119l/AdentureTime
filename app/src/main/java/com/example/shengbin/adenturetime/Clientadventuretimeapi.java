@@ -2,9 +2,9 @@ package com.example.shengbin.adenturetime;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 import com.example.shengbin.adenturetime.json.*;
+import com.example.shengbin.adenturetime.json.Character;
 
 import java.util.Arrays;
 
@@ -51,13 +51,13 @@ public class Clientadventuretimeapi {
          */
 
             for (int i =1; i<50; i++) {
-                Call<Characters> advtCall = service.characters(String.valueOf(i));
+                Call<Character> advtCall = service.characters(String.valueOf(i));
 
-                advtCall.enqueue(new Callback<Characters>() {
+                advtCall.enqueue(new Callback<Character>() {
                     @Override
-                    public void onResponse(Response<Characters> response, Retrofit retrofit) {
+                    public void onResponse(Response<Character> response, Retrofit retrofit) {
                         if (response.isSuccess()) {
-                            Characters character = response.body();
+                            Character character = response.body();
                             /*
                             Si no té imatge no l'afguim al adptador si té imatge si.
                              */
@@ -128,8 +128,8 @@ public class Clientadventuretimeapi {
                             /*
                             Insertem els characters de cada episodi.
                              */
-                            for(Characters characters : episode.getCharacters()){
-                                bd.altaEpi_char(context,characters.getId(),episode.getId());
+                            for(Character character : episode.getCharacters()){
+                                bd.altaEpi_char(context, character.getId(),episode.getId());
                             }
                         }
                     }
@@ -148,7 +148,7 @@ public class Clientadventuretimeapi {
     interface ClientadventuretimeapiInterface
     {
         @GET("characters/{id}")
-        Call<Characters> characters(
+        Call<Character> characters(
             @Path("id")String id
         );
 
