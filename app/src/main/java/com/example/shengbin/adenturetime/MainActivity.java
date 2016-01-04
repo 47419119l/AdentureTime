@@ -1,6 +1,8 @@
 package com.example.shengbin.adenturetime;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -41,6 +43,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*
+        Creo la BBDD.
+         */
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(getBaseContext(),"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+
     }
 
     @Override
@@ -102,4 +111,36 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    /**
+     *
+     * Metode per insertar a la BBDD SQLite els characters.
+      * @param id
+     * @param name
+     * @param sex
+     * @param fullname
+     * @param created
+     * @param image
+     *
+     */
+
+
+    /*
+    public void consultaporcodigo(View v) {
+        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
+                "administracion", null, 1);
+        SQLiteDatabase bd = admin.getWritableDatabase();
+        String cod = et1.getText().toString();
+        Cursor fila = bd.rawQuery(
+                "select descripcion,precio from articulos where codigo=" + cod, null);
+        if (fila.moveToFirst()) {
+            et2.setText(fila.getString(0));
+            et3.setText(fila.getString(1));
+        } else
+            Toast.makeText(this, "No existe un artículo con dicho código",
+                    Toast.LENGTH_SHORT).show();
+        bd.close();
+    }
+*/
 }
+

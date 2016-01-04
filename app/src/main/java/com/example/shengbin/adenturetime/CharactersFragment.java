@@ -15,8 +15,10 @@ import java.util.ArrayList;
  * A placeholder fragment containing a simple view.
  */
 public class CharactersFragment extends Fragment {
+
     private AdaptadorPersonalitzatCharacters adapter;
     private ArrayList<Characters> items;
+    DAOAdventuretimeDB dao = new DAOAdventuretimeDB();
 
     public CharactersFragment() {
     }
@@ -29,7 +31,7 @@ public class CharactersFragment extends Fragment {
         final ListView listCharacter = (ListView) rootView.findViewById(R.id.listView);
 
         items = new ArrayList<>();
-
+        dao.mostrarCharacter(getContext(),items);
         adapter = new AdaptadorPersonalitzatCharacters(
                 getContext(),
                 R.layout.character_adapter_list,
@@ -40,14 +42,10 @@ public class CharactersFragment extends Fragment {
 
         return rootView;
     }
-    private void cridaApi(){
-        Clientadventuretimeapi apiClient = new Clientadventuretimeapi();
-        apiClient.getCharacters(adapter);
-    }
-    @Override
 
+    @Override
     public void onStart(){
         super.onStart();
-        cridaApi();
+
     }
 }

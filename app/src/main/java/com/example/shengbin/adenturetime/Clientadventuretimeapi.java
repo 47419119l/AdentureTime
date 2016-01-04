@@ -1,5 +1,6 @@
 package com.example.shengbin.adenturetime;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 
@@ -18,6 +19,7 @@ import retrofit.http.Path;
 public class Clientadventuretimeapi {
 
     final String BASE_URL = "http://adventuretimeapi.com/api/v1/";
+    DAOAdventuretimeDB bd = new DAOAdventuretimeDB();
 
     //Conntectem amb la API
     Retrofit retrofit = new Retrofit.Builder()
@@ -37,9 +39,8 @@ public class Clientadventuretimeapi {
 
     /**
      * Metode per extreure els CharactersList de la API.
-     * @param adapter
      */
-    public void getCharacters(final ArrayAdapter<Characters> adapter){
+    public void getCharacters(final Context context){
 
         /**
          *
@@ -57,14 +58,30 @@ public class Clientadventuretimeapi {
                     public void onResponse(Response<Characters> response, Retrofit retrofit) {
                         if (response.isSuccess()) {
                             Characters character = response.body();
-                            adapter.clear();
                             /*
                             Si no té imatge no l'afguim al adptador si té imatge si.
                              */
                                 if (character.getImage().equals("")) {
 
                                 } else {
-                                    adapter.add(character);
+                                    /*
+                                    Insertem el caracter a la bbdd
+                                     */
+                                    bd.altaCharacter(context, character.getId(), character.getName(), character.getSex(), character.getFullName(), character.getCreated(), character.getImage());
+                                   /*
+                                   Insertem las species
+                                    */
+                                    for(Species species :character.getSpecies()){
+
+                                        bd.altaSpecies(context,character.getId(),species.getId(),species.getName());
+                                    }
+                                    /*
+                                    Insertem las occupation
+                                     */
+                                    for(Occupation occupation : character.getOccupations()){
+                                        bd.altaOcupation(context,character.getId(),occupation.getId(),occupation.getTitle());
+                                    }
+
                                 }
                             }
 
@@ -79,11 +96,8 @@ public class Clientadventuretimeapi {
     }
 
 
-    /**
-     * Metode per extreure els episodis.
-     * @param adapter
-     */
-    public void getEpisodes(final ArrayAdapter<Episode> adapter){
+
+    public void getEpisodes(final Context context){
         /**
          *
          * Igual que en els characters si fem una crida a els episodis no ens mostra tots els episodis i alguns tenen camps incomplerts
@@ -99,14 +113,24 @@ public class Clientadventuretimeapi {
                 public void onResponse(Response<Episode> response, Retrofit retrofit) {
                     if (response.isSuccess()) {
                         Episode episode = response.body();
-                        adapter.clear();
+
                             /*
                             Si no té imatge no l'afguim al adptador si té imatge si.
                              */
                         if (episode.getTitleCard().equals("")) {
 
                         } else {
-                            adapter.add(episode);
+                            /*
+                            Insertem episodi
+                             */
+                            bd.altaEpisode(context,episode.getId(),episode.getTitle(),episode.getTitleCard(),episode.getDescription());
+
+                            /*
+                            Insertem els characters de cada episodi.
+                             */
+                            for(Characters characters : episode.getCharacters()){
+                                bd.altaEpi_char(context,characters.getId(),episode.getId());
+                            }
                         }
                     }
 
