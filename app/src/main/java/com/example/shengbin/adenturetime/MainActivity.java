@@ -102,7 +102,12 @@ public class MainActivity extends AppCompatActivity
             startActivity(i);
         } else if (id == R.id.nav_slideshow) {
 
+            i = new Intent(this,SpeciesActivity.class);
+            startActivity(i);
+
         } else if (id == R.id.nav_manage) {
+            i = new Intent(this,Ocupation.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_share) {
 

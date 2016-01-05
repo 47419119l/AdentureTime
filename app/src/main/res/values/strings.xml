@@ -100,4 +100,6 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_details_chacarter">DetailsChacarter</string>
+    <string name="title_activity_species">SpeciesActivity</string>
+    <string name="title_activity_ocupation">Ocupation</string>
 </resources>

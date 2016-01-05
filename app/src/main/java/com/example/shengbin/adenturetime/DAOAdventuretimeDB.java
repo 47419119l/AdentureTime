@@ -4,9 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 
 import com.example.shengbin.adenturetime.json.Character;
 import com.example.shengbin.adenturetime.json.Episode;
+import com.example.shengbin.adenturetime.json.Species;
 
 import java.util.ArrayList;
 
@@ -21,6 +25,28 @@ public class DAOAdventuretimeDB {
      * Constructor clase DAOAdventuretimeDB
      */
     DAOAdventuretimeDB(){}
+    /**
+     * Metode que omple ArrayList amb els registres de la taula SPECIES
+     * @param context
+     */
+    public  void mostrarSpecies(Context context,Spinner spinner){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT ID AS _id, NAME FROM  SPECIES",null);
+        //Creo adaptador
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context,android.R.layout.simple_spinner_item,c,new String[]{"NAME"}, new int[]{android.R.id.text1});
+        // Afegueixo el layaut del menu
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Afeguim el adaptador al spinner perque ens surtins els items
+        spinner.setAdapter(adapter);
+
+
+        db.close();
+
+    }
+
     /**
      * Metode que omple un Array List amb tots el registres de la taula CHARACTERS.
      * @param context

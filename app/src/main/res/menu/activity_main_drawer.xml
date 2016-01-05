@@ -7,9 +7,9 @@
         <item android:id="@+id/nav_gallery" android:icon="@mipmap/beemo"
             android:title="Episodes" />
         <item android:id="@+id/nav_slideshow" android:icon="@android:drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Characters by species" />
         <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Characters by occupation" />
     </group>
 
     <item android:title="Communicate">
