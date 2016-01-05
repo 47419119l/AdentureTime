@@ -27,7 +27,7 @@ public class DAOAdventuretimeDB {
      * @param items
      */
     public void mostrarCharacter(Context context,ArrayList<Character>items){
-        String [] character = new String [5];
+
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
@@ -54,6 +54,7 @@ public class DAOAdventuretimeDB {
         }catch (Exception ex) {
 
         }
+        db.close();
     }
 
     /**
@@ -61,7 +62,7 @@ public class DAOAdventuretimeDB {
      * @param context
      * @param items
      */
-    public void mostrarEpisodes(Context context,ArrayList<Episode>items){
+    public  void mostrarEpisodes(Context context,ArrayList<Episode>items){
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
@@ -86,7 +87,7 @@ public class DAOAdventuretimeDB {
                 }while(c.moveToNext());
             }
         }catch (Exception ex) {
-
+        db.close();
         }
     }
     public void mostrarEpisodeCharacter(Context context,ArrayList<Episode> list, int id_cha){

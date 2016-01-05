@@ -1,10 +1,12 @@
 package com.example.shengbin.adenturetime;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.shengbin.adenturetime.json.Character;
@@ -39,6 +41,14 @@ public class CharactersFragment extends Fragment {
         );
         items = new ArrayList<>();
         listCharacter.setAdapter(adapter);
+        listCharacter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent i = new Intent(getContext(),DetailsChacarter.class);
+                startActivity(i);
+            }
+        });
 
         return rootView;
     }

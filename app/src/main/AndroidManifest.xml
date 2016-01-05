@@ -38,6 +38,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.shengbin.adenturetime.MainActivity" />
         </activity>
+        <activity
+            android:name=".DetailsChacarter"
+            android:label="@string/title_activity_details_chacarter"
+            android:parentActivityName=".CharactersList"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.shengbin.adenturetime.CharactersList" />
+        </activity>
     </application>
 
 </manifest>

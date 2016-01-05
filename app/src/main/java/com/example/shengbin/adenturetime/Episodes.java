@@ -1,5 +1,6 @@
 package com.example.shengbin.adenturetime;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +27,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class Episodes extends AppCompatActivity {
-    ArrayList <Episode>episodes;
+    ArrayList <Episode>episodes = new ArrayList<Episode>();
     DAOAdventuretimeDB db = new DAOAdventuretimeDB();
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -54,6 +56,8 @@ public class Episodes extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         db.mostrarEpisodes(getBaseContext(),episodes);
+        System.out.println(episodes.size());
+
 
 
         // Set up the ViewPager with the sections adapter.
@@ -107,16 +111,25 @@ public class Episodes extends AppCompatActivity {
         TextView titul;
         TextView descripcio;
         ImageView image;
+        ArrayList <Episode>episodes = new ArrayList<Episode>();
         DAOAdventuretimeDB db = new DAOAdventuretimeDB();
-        ArrayList <Episode>episodes;
+
+
+        static Context context;
         int position ;
 
         public PlaceholderFragment() {
+            this.context=getContext();
         }
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            db.mostrarEpisodes(getContext(), episodes);
+            db.mostrarEpisodes(getContext(),episodes);
+
+
+        }
+        public void  past (){
+             this.position= -1;
 
         }
 
@@ -140,20 +153,23 @@ public class Episodes extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_episodes, container, false);
 
             position = getArguments().getInt(ARG_SECTION_NUMBER);
+            int poscion = position -1;
 
 
             // Instanciem els objectes del layaot
             TextView titul = (TextView)rootView.findViewById(R.id.title);
             TextView descripcio = (TextView)rootView.findViewById(R.id.description);
             ImageView image = (ImageView)rootView.findViewById(R.id.imageView3);
-            titul.setText("Hola"+position);
-            descripcio.setText("hola");
-/*
+            titul.setText(episodes.get(poscion).getTitle());
+            getActivity().setTitle(titul.getText());
+            descripcio.setText(episodes.get(poscion).getDescription());
+
             Picasso.with(getContext())
-                    .load(episodes.get(1).getTitleCard())
+                    .load(episodes.get(position-1).getTitleCard())
                     .fit()
                     .into(image);
-                    */
+
+
 
             return rootView;
         }
@@ -174,13 +190,13 @@ public class Episodes extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return PlaceholderFragment.newInstance(position +1);
         }
 
         @Override
         public int getCount() {
 
-            return 48;
+            return 46;
         }
 
         public int getCount(int i) {

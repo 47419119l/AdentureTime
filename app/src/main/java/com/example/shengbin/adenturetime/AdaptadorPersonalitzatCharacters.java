@@ -44,7 +44,7 @@ public class AdaptadorPersonalitzatCharacters extends ArrayAdapter<Character> {
          */
         name.setText(character.getFullName());
         detail1.setText(character.getSex());
-        detail2.setText(character.getCreated());
+        detail2.setText(character.getName());
         Picasso.with(getContext())
                 .load(character.getImage())
                 .fit()
