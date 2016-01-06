@@ -67,7 +67,47 @@ public class DAOAdventuretimeDB {
 
         }
         db.close();
+    }public void mostrarCharacterPerOcupation(Context context, ArrayList<Character> items, int name){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+/*
+ "CREATE TABLE CHA_OC (" +
+                    " ID_CHA INTEGER NOT NULL,"+
+                    " ID_OC INTEGER NOT NULL," +
+                    " PRIMARY KEY(ID_CHA, ID_OC))";
+
+ */
+        Cursor c = db.rawQuery("SELECT CHARACTERS.ID, CHARACTERS.NAME, CHARACTERS.SEX, CHARACTERS.FULL_NAME, CHARACTERS.CREATED, CHARACTERS.IMAGE " +
+                "FROM CHARACTERS " +
+                "INNER JOIN CHA_OC " +
+                "ON CHA_OC.ID_CHA = CHARACTERS.ID " +
+                "WHERE CHA_OC.ID_OC = "+name,null);
+
+        try{
+            if(c.moveToFirst()){
+                do{
+                    /**
+                     * Creem el objecte l'hi afeguim els seus valors
+                     */
+                    Character cha = new Character();
+                    cha.setImage(c.getString(5));
+                    cha.setCreated(c.getString(4));
+                    cha.setFullName( c.getString(3));
+                    cha.setSex(c.getString(2));
+                    cha.setName(c.getString(1));
+                    /**
+                     * Afeguim objecte al ArrayList.
+                     */
+                    items.add(cha);
+                }while(c.moveToNext());
+            }
+        }catch (Exception ex) {
+
+        }
+        db.close();
     }
+
     /**
      * Metode que omple ArrayList amb els registres de la taula SPECIES
      * @param context
@@ -78,6 +118,26 @@ public class DAOAdventuretimeDB {
         SQLiteDatabase db = admin.getWritableDatabase();
 
         Cursor c = db.rawQuery("SELECT ID AS _id, NAME FROM  SPECIES",null);
+        //Creo adaptador
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context,android.R.layout.simple_spinner_item,c,new String[]{"NAME"}, new int[]{android.R.id.text1});
+        // Afegueixo el layaut del menu
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Afeguim el adaptador al spinner perque ens surtins els items
+        spinner.setAdapter(adapter);
+
+        db.close();
+
+    }
+    /**
+     * Metode que omple ArrayList amb els registres de la taula SPECIES
+     * @param context
+     */
+    public  void mostrarOccupation(Context context,Spinner spinner){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT ID AS _id, NAME FROM  OCUPATION",null);
         //Creo adaptador
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(context,android.R.layout.simple_spinner_item,c,new String[]{"NAME"}, new int[]{android.R.id.text1});
         // Afegueixo el layaut del menu

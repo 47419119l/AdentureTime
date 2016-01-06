@@ -63,7 +63,6 @@ public class SpeciesActivityFragment extends Fragment {
                 items.clear();
 
                 int id = (int)spinner.getSelectedItemId();
-                //System.out.println(nombreSpecie+"555555555555555555555
                 dao.mostrarCharacterPerSpecies(getContext(), items, id);
                 adapter.addAll(items);
                 listCharacter.setAdapter(adapter);

@@ -9,30 +9,33 @@
     tools:context="com.example.shengbin.adenturetime.Episodes$PlaceholderFragment">
 
     <ImageView
-        android:layout_width="247dp"
-        android:layout_height="235dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:id="@+id/imageView3"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="23dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="23dp" />
+        android:layout_marginLeft="23dp"
+        android:layout_marginRight="23dp"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="Description"
         android:id="@+id/description"
         android:textStyle="italic"
-        android:layout_below="@+id/title"
-        android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title"
         android:autoText="false"
         android:linksClickable="false"
         android:longClickable="false"
         android:nestedScrollingEnabled="false"
         android:singleLine="false"
-        android:typeface="monospace" />
+        android:typeface="monospace"
+        android:layout_below="@+id/title"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:layout_width="248dp"
@@ -40,35 +43,19 @@
         android:text="Title"
         android:id="@+id/title"
         android:textStyle="bold"
+        android:layout_marginLeft="25dp"
+        android:textSize="20dp"
+        android:layout_marginStart="25dp"
         android:layout_below="@+id/imageView3"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginLeft="25dp"
-        android:textSize="20dp" />
+        android:layout_alignParentStart="true" />
 
-    <ImageButton
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@mipmap/delan"
-        android:background="#03ffffff"
-        android:layout_alignTop="@+id/imageView3"
-        android:layout_toRightOf="@+id/imageView3"
-        android:layout_toEndOf="@+id/imageView3"
-        android:layout_marginTop="112dp" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton2"
-        android:visibility="visible"
-        android:background="#03ffffff"
-        android:src="@mipmap/detras"
-        android:layout_alignTop="@+id/imageButton"
-        android:layout_alignBottom="@+id/imageButton"
-        android:layout_toLeftOf="@+id/imageView3"
-        android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title" />
+        android:id="@+id/listaPerson"
+        android:layout_below="@+id/description"
+        android:layout_alignLeft="@+id/description"
+        android:layout_alignStart="@+id/description"
+        android:layout_marginBottom="20dp" />
 </RelativeLayout>

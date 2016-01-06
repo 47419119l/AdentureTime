@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.shengbin.adenturetime.json.Episode;
@@ -160,14 +161,24 @@ public class Episodes extends AppCompatActivity {
             TextView titul = (TextView)rootView.findViewById(R.id.title);
             TextView descripcio = (TextView)rootView.findViewById(R.id.description);
             ImageView image = (ImageView)rootView.findViewById(R.id.imageView3);
+            ListView list = (ListView)rootView.findViewById(R.id.listaPerson);
             titul.setText(episodes.get(poscion).getTitle());
             getActivity().setTitle(titul.getText());
             descripcio.setText(episodes.get(poscion).getDescription());
-
+            ArrayList items = new ArrayList<>();
+            db.mostrarCharacter(getContext(),items);
+            AdaptadorPersonalitzatCharacters adapter = new AdaptadorPersonalitzatCharacters(
+                    getContext(),
+                    R.layout.character_adapter_list,
+                    items
+            );
+            items = new ArrayList<>();
+            list.setAdapter(adapter);
             Picasso.with(getContext())
                     .load(episodes.get(position-1).getTitleCard())
                     .fit()
                     .into(image);
+
 
 
 

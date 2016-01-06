@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity
         /*
         Creo la BBDD.
          */
+
         adventureTimeDbHelper admin = new adventureTimeDbHelper(getBaseContext(),"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
@@ -119,36 +121,5 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    /**
-     *
-     * Metode per insertar a la BBDD SQLite els characters.
-      * @param id
-     * @param name
-     * @param sex
-     * @param fullname
-     * @param created
-     * @param image
-     *
-     */
-
-
-    /*
-    public void consultaporcodigo(View v) {
-        AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this,
-                "administracion", null, 1);
-        SQLiteDatabase bd = admin.getWritableDatabase();
-        String cod = et1.getText().toString();
-        Cursor fila = bd.rawQuery(
-                "select descripcion,precio from articulos where codigo=" + cod, null);
-        if (fila.moveToFirst()) {
-            et2.setText(fila.getString(0));
-            et3.setText(fila.getString(1));
-        } else
-            Toast.makeText(this, "No existe un artículo con dicho código",
-                    Toast.LENGTH_SHORT).show();
-        bd.close();
-    }
-*/
 }
 
