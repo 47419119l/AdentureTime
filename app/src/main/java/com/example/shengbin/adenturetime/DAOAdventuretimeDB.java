@@ -25,6 +25,49 @@ public class DAOAdventuretimeDB {
      * Constructor clase DAOAdventuretimeDB
      */
     DAOAdventuretimeDB(){}
+
+    /**
+     * Metode que omple un arrayList amb els registre de la taula CHARACTER d'una specie concreta.
+     * @param context
+     * @param items
+     * @param name
+     */
+    public void mostrarCharacterPerSpecies(Context context, ArrayList<Character> items, int name){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+
+        Cursor c = db.rawQuery("SELECT CHARACTERS.ID, CHARACTERS.NAME, CHARACTERS.SEX, CHARACTERS.FULL_NAME, CHARACTERS.CREATED, CHARACTERS.IMAGE " +
+                "FROM " +
+                "( CHARACTERS " +
+                " JOIN CHA_SPECIES " +
+                "ON CHARACTERS.ID = CHA_SPECIES.ID_CHA ) " +
+                "LEFT JOIN SPECIES ON CHA_SPECIES.ID_SPECIES = SPECIES.ID " +
+                "WHERE SPECIES.ID = "+name+"",null);
+
+        try{
+            if(c.moveToFirst()){
+                do{
+                    /**
+                     * Creem el objecte l'hi afeguim els seus valors
+                     */
+                    Character cha = new Character();
+                    cha.setImage(c.getString(5));
+                    cha.setCreated(c.getString(4));
+                    cha.setFullName( c.getString(3));
+                    cha.setSex(c.getString(2));
+                    cha.setName(c.getString(1));
+                    /**
+                     * Afeguim objecte al ArrayList.
+                     */
+                    items.add(cha);
+                }while(c.moveToNext());
+            }
+        }catch (Exception ex) {
+
+        }
+        db.close();
+    }
     /**
      * Metode que omple ArrayList amb els registres de la taula SPECIES
      * @param context
@@ -41,7 +84,6 @@ public class DAOAdventuretimeDB {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Afeguim el adaptador al spinner perque ens surtins els items
         spinner.setAdapter(adapter);
-
 
         db.close();
 

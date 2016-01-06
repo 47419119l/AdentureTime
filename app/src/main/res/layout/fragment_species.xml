@@ -14,10 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/CharList"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="78dp" />
+        android:layout_below="@+id/spinner" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -25,7 +24,9 @@
         android:id="@+id/spinner"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:spinnerMode="dropdown"
+        android:layout_centerVertical="true" />
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -36,6 +37,19 @@
         android:layout_alignRight="@+id/spinner"
         android:layout_alignEnd="@+id/spinner"
         android:layout_alignBottom="@+id/spinner"
-        android:background="#ff4182" />
+        android:background="#ff4182"
+        android:layout_alignLeft="@+id/spinner" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/CharList"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="true"
+        android:background="#d6faf6f6"
+        android:layout_toLeftOf="@+id/search"
+        android:layout_toStartOf="@+id/search"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerVertical="true"></RelativeLayout>
 
 </RelativeLayout>
