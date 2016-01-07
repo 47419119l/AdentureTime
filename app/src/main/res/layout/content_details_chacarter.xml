@@ -8,10 +8,159 @@
     tools:context="com.example.shengbin.adenturetime.DetailsChacarter"
     tools:showIn="@layout/activity_details_chacarter">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:text="@string/large_text" />
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.shengbin.adenturetime.VideoFragment"
+                android:layout_alignTop="@+id/scrollView"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/linea"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#c8b4e8ff"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:weightSum="1">
+
+                    <ImageView
+
+                        android:id="@+id/poster"
+                        android:layout_width="90dp"
+                        android:layout_height="130dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_margin="10dip"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.34"
+                        android:layout_margin="5dip">
+
+                        <TextView
+                            android:textSize="15sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/nom"
+                            android:textColor="#8a8282"
+                            android:text="Nom"
+                            android:textStyle="bold"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="40dp"
+                            android:layout_marginEnd="40dp"
+                            android:layout_margin="5dip"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Nomcurt"
+                            android:textColor="#8a8282"
+                            android:id="@+id/nomcurt"
+                            android:layout_alignBaseline="@+id/descripcio"
+                            android:layout_alignBottom="@+id/descripcio"
+                            android:layout_centerHorizontal="true"
+                            android:layout_margin="5dip"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sex"
+                            android:textColor="#8a8282"
+                            android:id="@+id/sex"
+                            android:layout_below="@+id/scrollView"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="23dp"
+                            android:layout_margin="5dip"
+                            android:textStyle="italic" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="SPECIE"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/descripcio"
+                    android:layout_below="@+id/linea"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="10dip"
+                    android:textStyle="bold" />
+
+
+
+                <RelativeLayout
+
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/descripcio"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="#b377f5c7">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/listSpeciDetall"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="\n    Human\n\n    Candy Person\n\n    Hello\n\n    hdjashjdh\n\n    hsjdhsjahda\n" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/relativeLayout"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OCUPATIONS"
+                        android:id="@+id/textView8"
+                        android:textStyle="bold"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/listOcDetall"
+                        android:background="#e19dfac1"
+                        android:layout_below="@+id/textView8"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:text="\n    Human\n\n    Candy Person\n\n    Hello\n\n    hdjashjdh\n\n    hsjdhsjahda\n"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
+
 
 </android.support.v4.widget.NestedScrollView>

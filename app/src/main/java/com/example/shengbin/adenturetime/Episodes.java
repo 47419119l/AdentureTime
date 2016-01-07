@@ -1,6 +1,7 @@
 package com.example.shengbin.adenturetime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,7 +58,7 @@ public class Episodes extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        db.mostrarEpisodes(getBaseContext(),episodes);
+        db.mostrarEpisodes(getBaseContext(), episodes);
         System.out.println(episodes.size());
 
 
@@ -64,16 +66,6 @@ public class Episodes extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
@@ -163,17 +155,26 @@ public class Episodes extends AppCompatActivity {
             ImageView image = (ImageView)rootView.findViewById(R.id.imageView3);
             ListView list = (ListView)rootView.findViewById(R.id.listaPerson);
             titul.setText(episodes.get(poscion).getTitle());
-            getActivity().setTitle(titul.getText());
+            getActivity().setTitle("");
             descripcio.setText(episodes.get(poscion).getDescription());
             ArrayList items = new ArrayList<>();
             db.mostrarCharacter(getContext(),items);
-            AdaptadorPersonalitzatCharacters adapter = new AdaptadorPersonalitzatCharacters(
+            final AdaptadorPersonalitzatCharacters adapter = new AdaptadorPersonalitzatCharacters(
                     getContext(),
                     R.layout.character_adapter_list,
                     items
             );
             items = new ArrayList<>();
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Intent i = new Intent(getContext(), DetailsChacarter.class);
+                    i.putExtra("item", adapter.getItem(position));
+                    startActivity(i);
+                }
+            });
             Picasso.with(getContext())
                     .load(episodes.get(position-1).getTitleCard())
                     .fit()

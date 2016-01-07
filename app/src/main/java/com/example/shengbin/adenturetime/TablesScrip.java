@@ -54,4 +54,9 @@ public class TablesScrip {
                      "ID_EP INTEGER NOT NULL, " +
                     "PRIMARY KEY(ID_CHA, ID_EP))";
 
+    public static final String crear_taula_like=
+            "CREATE TABLE LIKE (" +
+                    " ID INTEGER PRIMARY KEY NOT NULL )";
+
+
 }

@@ -21,15 +21,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CharactersList"
-            android:label="@string/title_activity_characters"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shengbin.adenturetime.MainActivity" />
-        </activity>
-        <activity
             android:name=".Episodes"
             android:label="@string/title_activity_episodes"
             android:parentActivityName=".MainActivity"
@@ -41,19 +32,42 @@
         <activity
             android:name=".DetailsChacarter"
             android:label="@string/title_activity_details_chacarter"
-            android:parentActivityName=".CharactersList"
+            android:parentActivityName=".ListaCharacters"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shengbin.adenturetime.CharactersList" />
+                android:value="com.example.shengbin.adenturetime.ListaCharacters" />
         </activity>
         <activity
             android:name=".SpeciesActivity"
             android:label="@string/title_activity_species"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.shengbin.adenturetime.MainActivity" />
+        </activity>
         <activity
             android:name=".Ocupation"
             android:label="@string/title_activity_ocupation"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.shengbin.adenturetime.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ListaCharacters"
+            android:label="@string/title_activity_lista_characters"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.shengbin.adenturetime.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Like"
+            android:label="@string/title_activity_like"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

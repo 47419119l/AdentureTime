@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 
@@ -71,13 +72,7 @@ public class DAOAdventuretimeDB {
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
-/*
- "CREATE TABLE CHA_OC (" +
-                    " ID_CHA INTEGER NOT NULL,"+
-                    " ID_OC INTEGER NOT NULL," +
-                    " PRIMARY KEY(ID_CHA, ID_OC))";
 
- */
         Cursor c = db.rawQuery("SELECT CHARACTERS.ID, CHARACTERS.NAME, CHARACTERS.SEX, CHARACTERS.FULL_NAME, CHARACTERS.CREATED, CHARACTERS.IMAGE " +
                 "FROM CHARACTERS " +
                 "INNER JOIN CHA_OC " +
@@ -132,6 +127,65 @@ public class DAOAdventuretimeDB {
      * Metode que omple ArrayList amb els registres de la taula SPECIES
      * @param context
      */
+    public  String mostrarSpecies(Context context, int ID){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        String species = "";
+
+        Cursor c = db.rawQuery("SELECT ID , NAME FROM  SPECIES " +
+                "INNER JOIN CHA_SPECIES " +
+                "ON CHA_SPECIES.ID_SPECIES = SPECIES.ID " +
+                "WHERE CHA_SPECIES.ID_CHA = "+ID, null);
+        try {
+            if (c.moveToFirst()) {
+                do {
+                    species=species+"\n";
+                    species=species+"      "+c.getString(1)+"\n";
+                } while (c.moveToNext());
+            }
+        }catch (Exception e){
+
+        }
+
+        db.close();
+
+        return species;
+    }
+    /**
+     * Metode que omple ArrayList amb els registres de la taula SPECIES
+     * @param context
+     */
+    public  String mostrarOcupation(Context context, int ID){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        String ocu = "";
+
+        Cursor c = db.rawQuery("SELECT ID , NAME FROM  OCUPATION " +
+                "INNER JOIN CHA_OC " +
+                "ON CHA_OC.ID_OC = OCUPATION.ID " +
+                "WHERE CHA_OC.ID_CHA = "+ID, null);
+        try {
+            if (c.moveToFirst()) {
+                do {
+                    ocu=ocu+"\n";
+                    ocu=ocu+"      "+c.getString(1)+"\n";
+                } while (c.moveToNext());
+            }
+        }catch (Exception e){
+
+        }
+
+        db.close();
+
+        return ocu;
+    }
+
+    /**
+     * Metode que omple ArrayList amb els registres de la taula SPECIES
+     * @param context
+     */
     public  void mostrarOccupation(Context context,Spinner spinner){
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
@@ -173,6 +227,7 @@ public class DAOAdventuretimeDB {
                     cha.setFullName( c.getString(3));
                     cha.setSex(c.getString(2));
                     cha.setName(c.getString(1));
+                    cha.setId(c.getInt(0));
                     /**
                      * Afeguim objecte al ArrayList.
                      */
@@ -217,6 +272,45 @@ public class DAOAdventuretimeDB {
         }catch (Exception ex) {
         db.close();
         }
+    }
+    /**
+     * Metode que omple ArrayList amb els registres de la taula EPISODES
+     * @param context
+     * @param items
+     */
+    public  void mostrarLike(Context context,ArrayList<Character>items){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        Cursor c = db.rawQuery("SELECT CHARACTERS.ID, CHARACTERS.NAME, CHARACTERS.SEX, CHARACTERS.FULL_NAME, CHARACTERS.CREATED, CHARACTERS.IMAGE " +
+                "FROM CHARACTERS " +
+                "INNER JOIN LIKE " +
+                "ON LIKE.ID = CHARACTERS.ID ",null);
+
+        try{
+            if(c.moveToFirst()){
+                do{
+                    /**
+                     * Creem el objecte l'hi afeguim els seus valors
+                     */
+                    Character cha = new Character();
+                    cha.setImage(c.getString(5));
+                    cha.setCreated(c.getString(4));
+                    cha.setFullName( c.getString(3));
+                    cha.setSex(c.getString(2));
+                    cha.setName(c.getString(1));
+                    cha.setId(c.getInt(0));
+                    /**
+                     * Afeguim objecte al ArrayList.
+                     */
+                    items.add(cha);
+                }while(c.moveToNext());
+            }
+        }catch (Exception ex) {
+
+        }
+        db.close();
+
     }
     public void mostrarEpisodeCharacter(Context context,ArrayList<Episode> list, int id_cha){
 
@@ -360,6 +454,23 @@ public class DAOAdventuretimeDB {
         registre.put("ID_CHA", id_cha);
         registre.put("ID_EP", id_ep);
         db.insert("CHA_EP", null, registre);
+        db.close();
+    }
+
+    public void altaLike(Context context, int id){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context, "adventuretime", null, 1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        ContentValues registre = new ContentValues();
+        registre.put("ID", id);
+        db.insert("LIKE", null, registre);
+        db.close();
+    }
+    public void eliminarLike(Context context, int id){
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(context, "adventuretime", null, 1);
+        SQLiteDatabase db = admin.getWritableDatabase();
+        db.delete("LIKE","ID ="+id,null);
         db.close();
     }
 

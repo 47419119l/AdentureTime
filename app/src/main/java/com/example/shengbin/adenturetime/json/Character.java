@@ -3,11 +3,12 @@ package com.example.shengbin.adenturetime.json;
 /**
  * Created by shengbin on 2016/1/4.
  */
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Character {
+public class Character implements Serializable {
 
 
     private int id;

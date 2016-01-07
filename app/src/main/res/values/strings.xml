@@ -102,4 +102,8 @@
     <string name="title_activity_details_chacarter">DetailsChacarter</string>
     <string name="title_activity_species">SpeciesActivity</string>
     <string name="title_activity_ocupation">Ocupation</string>
+    <string name="title_activity_video_op">VideoOp</string>
+    <string name="title_activity_video">Video</string>
+    <string name="title_activity_lista_characters">ListaCharacters</string>
+    <string name="title_activity_like">Like</string>
 </resources>

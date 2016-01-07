@@ -32,6 +32,7 @@ public class adventureTimeDbHelper extends SQLiteOpenHelper {
         db.execSQL(TablesScrip.crear_taula_characters_ocupation);
         db.execSQL(TablesScrip.crear_taula_ocupation);
         db.execSQL(TablesScrip.crear_taula_episode);
+        db.execSQL(TablesScrip.crear_taula_like);
         /*
          Cridem a la Api per a fer els inserts a la BBDD.
          */

@@ -43,8 +43,12 @@ public class AdaptadorPersonalitzatCharacters extends ArrayAdapter<Character> {
         Introduim els valors
          */
         name.setText(character.getFullName());
-        detail1.setText(character.getSex());
-        detail2.setText(character.getName());
+        if(character.getSex().equals("")){
+         detail1.setText("Sex : indeterminate");
+        }else {
+            detail1.setText("Sex : " + character.getSex());
+        }
+        detail2.setText("ID : "+character.getId());
         Picasso.with(getContext())
                 .load(character.getImage())
                 .fit()
