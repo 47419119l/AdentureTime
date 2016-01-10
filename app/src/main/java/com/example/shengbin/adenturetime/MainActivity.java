@@ -1,12 +1,17 @@
 package com.example.shengbin.adenturetime;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,13 +21,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.shengbin.adenturetime.json.Episode;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-VideoView video ;
+
+    MediaPlayer musica;
+
+    public void onStart() {
+        super.onStart();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String tipusConsulta = preferences.getString("musica_status", "musicaOn");
+
+        if (tipusConsulta.equals("musicaOn")) {
+            musica.start();
+        }else{
+            musica.stop();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +75,16 @@ VideoView video ;
         adventureTimeDbHelper admin = new adventureTimeDbHelper(getBaseContext(),"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
+        musica = MediaPlayer.create(getBaseContext(), R.raw.piano);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String tipusConsulta = preferences.getString("musica_status", "musicaOn");
+
+        if (tipusConsulta.equals("musicaOn")) {
+            musica.start();
+        }else{
+            musica.stop();
+        }
 
 
     }
@@ -86,6 +115,11 @@ VideoView video ;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+              /*
+            Afegueixo la intent a l'Activity Settings.
+             */
+            Intent i = new Intent(this,SettingsActivity.class);
+            startActivity(i);
             return true;
         }
 
