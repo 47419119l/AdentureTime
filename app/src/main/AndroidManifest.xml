@@ -48,15 +48,6 @@
             android:value="com.example.shengbin.adenturetime.MainActivity" />
         </activity>
         <activity
-            android:name=".Ocupation"
-            android:label="@string/title_activity_ocupation"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shengbin.adenturetime.MainActivity" />
-        </activity>
-        <activity
             android:name=".ListaCharacters"
             android:label="@string/title_activity_lista_characters"
             android:parentActivityName=".MainActivity"

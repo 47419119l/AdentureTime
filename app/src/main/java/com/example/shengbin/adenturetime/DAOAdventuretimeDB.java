@@ -58,6 +58,8 @@ public class DAOAdventuretimeDB {
                     cha.setFullName( c.getString(3));
                     cha.setSex(c.getString(2));
                     cha.setName(c.getString(1));
+                    cha.setId(c.getInt(0));
+
                     /**
                      * Afeguim objecte al ArrayList.
                      */
@@ -91,6 +93,7 @@ public class DAOAdventuretimeDB {
                     cha.setFullName( c.getString(3));
                     cha.setSex(c.getString(2));
                     cha.setName(c.getString(1));
+                    cha.setId(c.getInt(0));
                     /**
                      * Afeguim objecte al ArrayList.
                      */
@@ -183,27 +186,6 @@ public class DAOAdventuretimeDB {
     }
 
     /**
-     * Metode que omple ArrayList amb els registres de la taula SPECIES
-     * @param context
-     */
-    public  void mostrarOccupation(Context context,Spinner spinner){
-
-        adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
-        SQLiteDatabase db = admin.getWritableDatabase();
-
-        Cursor c = db.rawQuery("SELECT ID AS _id, NAME FROM  OCUPATION",null);
-        //Creo adaptador
-        SimpleCursorAdapter adapter = new SimpleCursorAdapter(context,android.R.layout.simple_spinner_item,c,new String[]{"NAME"}, new int[]{android.R.id.text1});
-        // Afegueixo el layaut del menu
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Afeguim el adaptador al spinner perque ens surtins els items
-        spinner.setAdapter(adapter);
-
-        db.close();
-
-    }
-
-    /**
      * Metode que omple un Array List amb tots el registres de la taula CHARACTERS.
      * @param context
      * @param items
@@ -262,6 +244,7 @@ public class DAOAdventuretimeDB {
                     cha.setDescription(c.getString(3));
                     cha.setTitleCard(c.getString(2));
                     cha.setTitle(c.getString(1));
+                    cha.setId(c.getInt(0));
 
                     /**
                      * Afeguim objecte al ArrayList.
@@ -312,17 +295,25 @@ public class DAOAdventuretimeDB {
         db.close();
 
     }
-    public void mostrarEpisodeCharacter(Context context,ArrayList<Episode> list, int id_cha){
+
+    /**
+     * Mostra els CHARACTERS DE CADA EPISODI
+     * @param context
+     * @param list
+     * @param id_cha
+     */
+    public void mostrarEpisodeCharacter(Context context,ArrayList<Character> list, int id_cha){
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
         /*
         Creem la consulta.
          */
-        Cursor c = db.rawQuery("SELECT ID, NAME, IMAGE, DESCRIPTION FROM EPISODE " +
+        Cursor c = db.rawQuery("SELECT CHARACTERS.ID, CHARACTERS.NAME, CHARACTERS.SEX, CHARACTERS.FULL_NAME, CHARACTERS.CREATED, CHARACTERS.IMAGE " +
+                "FROM CHARACTERS " +
                 "INNER JOIN CHA_EP" +
-                " ON EPISODE.ID = CHA_EP.ID_EP"+
-                " WHERE CHA_EP.ID_CHA = "+id_cha ,null);
+                " ON CHA_EP.ID_CHA = CHARACTERS.ID"+
+                " WHERE CHA_EP.ID_EP = "+id_cha ,null);
 
         try{
             if(c.moveToFirst()){
@@ -330,10 +321,13 @@ public class DAOAdventuretimeDB {
                     /**
                      * Creem el objecte l'hi afeguim els seus valors
                      */
-                    Episode cha = new Episode();
-                    cha.setDescription(c.getString(3));
-                    cha.setTitleCard(c.getString(2));
-                    cha.setTitle(c.getString(1));
+                    Character cha = new Character();
+                    cha.setId(c.getInt(0));
+                    cha.setName(c.getString(1));
+                    cha.setSex(c.getString(2));
+                    cha.setFullName(c.getString(3));
+                    cha.setCreated(c.getString(4));
+                    cha.setImage(c.getString(5));
 
                     /**
                      * Afeguim objecte al ArrayList.
@@ -457,6 +451,11 @@ public class DAOAdventuretimeDB {
         db.close();
     }
 
+    /**
+     * Metode per donar d'alta registres a la taula LIKE.
+     * @param context
+     * @param id
+     */
     public void altaLike(Context context, int id){
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context, "adventuretime", null, 1);
@@ -466,6 +465,12 @@ public class DAOAdventuretimeDB {
         db.insert("LIKE", null, registre);
         db.close();
     }
+
+    /**
+     * Aquesta funció esborra el registe de la taula Like que l'hi diem.
+     * @param context
+     * @param id
+     */
     public void eliminarLike(Context context, int id){
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context, "adventuretime", null, 1);

@@ -12,8 +12,7 @@
             android:title="Like" />
     </group>
 
-    <item android:title="External
-     +links">
+    <item android:title="External links">
         <menu>
             <item android:id="@+id/nav_share" android:icon="@mipmap/youtube"
                 android:title="Opening Adventure Time" />

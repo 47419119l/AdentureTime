@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.shengbin.adenturetime.json.Episode;
+import com.example.shengbin.adenturetime.json.*;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -158,7 +158,7 @@ public class Episodes extends AppCompatActivity {
             getActivity().setTitle("");
             descripcio.setText(episodes.get(poscion).getDescription());
             ArrayList items = new ArrayList<>();
-            db.mostrarCharacter(getContext(),items);
+            db.mostrarEpisodeCharacter(getContext(),items,episodes.get(poscion).getId());
             final AdaptadorPersonalitzatCharacters adapter = new AdaptadorPersonalitzatCharacters(
                     getContext(),
                     R.layout.character_adapter_list,

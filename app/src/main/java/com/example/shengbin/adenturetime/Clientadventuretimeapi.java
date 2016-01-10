@@ -50,7 +50,7 @@ public class Clientadventuretimeapi {
          *
          */
 
-            for (int i =1; i<50; i++) {
+            for (int i =1; i<100; i++) {
                 Call<Character> advtCall = service.characters(String.valueOf(i));
 
                 advtCall.enqueue(new Callback<Character>() {
