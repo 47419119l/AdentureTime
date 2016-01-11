@@ -3,6 +3,7 @@ package com.example.shengbin.adenturetime;
 import android.content.Context;
 import android.util.Log;
 
+import com.arasthel.asyncjob.AsyncJob;
 import com.example.shengbin.adenturetime.json.*;
 import com.example.shengbin.adenturetime.json.Character;
 
@@ -55,35 +56,51 @@ public class Clientadventuretimeapi {
 
                 advtCall.enqueue(new Callback<Character>() {
                     @Override
-                    public void onResponse(Response<Character> response, Retrofit retrofit) {
-                        if (response.isSuccess()) {
-                            Character character = response.body();
+                    public void onResponse(final Response<Character> response, Retrofit retrofit) {
+                        new AsyncJob.AsyncJobBuilder<Boolean>()
+                                .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                                    @Override
+                                    public Boolean doAsync() {
+                                        if (response.isSuccess()) {
+                                            Character character = response.body();
                             /*
                             Si no té imatge no l'afguim al adptador si té imatge si.
                              */
-                                if (character.getImage().equals("")) {
+                                            if (character.getImage().equals("")) {
 
-                                } else {
+                                            } else {
                                     /*
                                     Insertem el caracter a la bbdd
                                      */
-                                    bd.altaCharacter(context, character.getId(), character.getName(), character.getSex(), character.getFullName(), character.getCreated(), character.getImage());
+                                                bd.altaCharacter(context, character.getId(), character.getName(), character.getSex(), character.getFullName(), character.getCreated(), character.getImage());
                                    /*
                                    Insertem las species
                                     */
-                                    for(Species species :character.getSpecies()){
+                                                for(Species species :character.getSpecies()){
 
-                                        bd.altaSpecies(context,character.getId(),species.getId(),species.getName());
-                                    }
+                                                    bd.altaSpecies(context,character.getId(),species.getId(),species.getName());
+                                                }
                                     /*
                                     Insertem las occupation
                                      */
-                                    for(Occupation occupation : character.getOccupations()){
-                                        bd.altaOcupation(context,character.getId(),occupation.getId(),occupation.getTitle());
-                                    }
+                                                for(Occupation occupation : character.getOccupations()){
+                                                    bd.altaOcupation(context,character.getId(),occupation.getId(),occupation.getTitle());
+                                                }
 
-                                }
-                            }
+                                            }
+                                        }
+                                        return true;
+                                    }
+                                })
+                                .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                                    @Override
+                                    public void onResult(Object o) {
+
+
+                                    }
+                                }).create().start();
+
+
 
                     }
 
@@ -110,29 +127,46 @@ public class Clientadventuretimeapi {
 
             advtCall.enqueue(new Callback<Episode>() {
                 @Override
-                public void onResponse(Response<Episode> response, Retrofit retrofit) {
-                    if (response.isSuccess()) {
-                        Episode episode = response.body();
+                public void onResponse(final Response<Episode> response, Retrofit retrofit) {
+                    new AsyncJob.AsyncJobBuilder<Boolean>()
+                            .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                                @Override
+                                public Boolean doAsync() {
 
-                            /*
-                            Si no té imatge no l'afguim al adptador si té imatge si.
-                             */
-                        if (episode.getTitleCard().equals("")) {
+                                    if (response.isSuccess()) {
 
-                        } else {
-                            /*
-                            Insertem episodi
-                             */
-                            bd.altaEpisode(context,episode.getId(),episode.getTitle(),episode.getTitleCard(),episode.getDescription());
+                                        Episode episode = response.body();
 
-                            /*
-                            Insertem els characters de cada episodi.
-                             */
-                            for(Character character : episode.getCharacters()){
-                                bd.altaEpi_char(context, character.getId(),episode.getId());
-                            }
-                        }
-                    }
+                                        /*
+                                        Si no té imatge no l'afguim al adptador si té imatge si.
+                                         */
+                                        if (episode.getTitleCard().equals("")) {
+
+                                        } else {
+                                        /*
+                                        Insertem episodi
+                                         */
+                                            bd.altaEpisode(context,episode.getId(),episode.getTitle(),episode.getTitleCard(),episode.getDescription());
+
+                                        /*
+                                        Insertem els characters de cada episodi.
+                                         */
+                                            for(Character character : episode.getCharacters()){
+                                                bd.altaEpi_char(context, character.getId(),episode.getId());
+                                            }
+                                        }
+                                    }
+                                    return true;
+                                }
+                            })
+                            .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                                @Override
+                                public void onResult(Object o) {
+
+                                }
+                            }).create().start();
+
+
 
                 }
 

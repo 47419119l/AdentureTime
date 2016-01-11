@@ -11,6 +11,7 @@ public class TablesScrip {
     /**
      * Scrips creació de taules.
      */
+
     public static final String crear_taula_characters =
             "CREATE TABLE CHARACTERS (ID INTEGER PRIMARY KEY NOT NULL," +
                     "NAME TEXT NOT NULL," +

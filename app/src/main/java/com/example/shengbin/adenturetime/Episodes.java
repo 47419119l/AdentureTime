@@ -117,6 +117,7 @@ public class Episodes extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
             db.mostrarEpisodes(getContext(),episodes);
 
 

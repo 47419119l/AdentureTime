@@ -4,11 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-
 import com.example.shengbin.adenturetime.json.Character;
 import com.example.shengbin.adenturetime.json.Episode;
 import com.example.shengbin.adenturetime.json.Species;

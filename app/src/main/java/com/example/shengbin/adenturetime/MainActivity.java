@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(this,SettingsActivity.class);
             startActivity(i);
             return true;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -134,24 +135,32 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
         if (id == R.id.nav_camara) {
+
             i = new Intent(this, ListaCharacters.class);
             startActivity(i);
         } else if (id == R.id.nav_gallery) {
+
             i = new Intent(this, Episodes.class);
             startActivity(i);
+
         } else if (id == R.id.nav_slideshow) {
 
             i = new Intent(this,SpeciesActivity.class);
             startActivity(i);
 
         } else if (id == R.id.nav_manage) {
+
             i = new Intent(this,Like.class);
             startActivity(i);
 
         } else if (id == R.id.nav_share) {
+
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=_HmasaSBzYM")));
+
         } else if (id == R.id.nav_send) {
+
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/adventuretime/?fref=ts")));
 
         }

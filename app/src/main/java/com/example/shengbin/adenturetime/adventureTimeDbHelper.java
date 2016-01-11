@@ -5,8 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
+ *
  * Created by shengbin on 2016/1/4.
  * Informació extreta de : http://www.hermosaprogramacion.com/2014/10/android-sqlite-bases-de-datos/
+ *
  */
 public class adventureTimeDbHelper extends SQLiteOpenHelper {
     Context context;
@@ -45,5 +47,7 @@ public class adventureTimeDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //Actualitzar a base de dades.
+
+
     }
 }

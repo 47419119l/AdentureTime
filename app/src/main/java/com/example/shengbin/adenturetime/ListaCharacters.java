@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.arasthel.asyncjob.AsyncJob;
 import com.example.shengbin.adenturetime.json.*;
 
 import java.util.ArrayList;
@@ -31,13 +32,29 @@ public class ListaCharacters extends AppCompatActivity {
         setTitle("");
         ListView listCharacter = (ListView)findViewById(R.id.listView);
         items = new ArrayList<>();
-        dao.mostrarCharacter(getBaseContext(), items);
         adapter = new AdaptadorPersonalitzatCharacters(
                 getBaseContext(),
                 R.layout.character_adapter_list,
                 items
         );
-        items = new ArrayList<>();
+
+        new AsyncJob.AsyncJobBuilder<Boolean>()
+                .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                    @Override
+                    public Boolean doAsync() {
+                        dao.mostrarCharacter(getBaseContext(), items);
+                        return true;
+                    }
+                })
+                .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                    @Override
+                    public void onResult(Object o) {
+                        adapter.notifyDataSetChanged();
+
+                    }
+                }).create().start();
+
+
         listCharacter.setAdapter(adapter);
         listCharacter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

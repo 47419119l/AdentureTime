@@ -15,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.arasthel.asyncjob.AsyncJob;
 import com.example.shengbin.adenturetime.json.*;
 import com.example.shengbin.adenturetime.json.Character;
 
@@ -41,17 +42,35 @@ public class SpeciesActivityFragment extends Fragment {
         getActivity().setTitle("Search characters");
         final ListView listCharacter = (ListView) rootView.findViewById(R.id.CharList);
         final Spinner spinner = (Spinner)rootView.findViewById(R.id.spinner);
+
+
         dao.mostrarSpecies(getContext(),spinner);
+
         items = new ArrayList<>();
-        dao.mostrarCharacter(getContext(), items);
+
         adapter = new AdaptadorPersonalitzatCharacters(
                 getContext(),
                 R.layout.character_adapter_list,
                 items
         );
 
-        items = new ArrayList<>();
-        listCharacter.setAdapter(adapter);
+        new AsyncJob.AsyncJobBuilder<Boolean>()
+                .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                    @Override
+                    public Boolean doAsync() {
+                        dao.mostrarCharacter(getContext(), items);
+                        return true;
+                    }
+                })
+                .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                    @Override
+                    public void onResult(Object o) {
+                        adapter.notifyDataSetChanged();
+                        listCharacter.setAdapter(adapter);
+
+                    }
+                }).create().start();
+
 
         button = (ImageButton) rootView.findViewById(R.id.search);
 
@@ -62,10 +81,25 @@ public class SpeciesActivityFragment extends Fragment {
                 adapter.clear();
                 items.clear();
 
-                int id = (int)spinner.getSelectedItemId();
-                dao.mostrarCharacterPerSpecies(getContext(), items, id);
-                adapter.addAll(items);
-                listCharacter.setAdapter(adapter);
+                final int id = (int)spinner.getSelectedItemId();
+                new AsyncJob.AsyncJobBuilder<Boolean>()
+                        .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                            @Override
+                            public Boolean doAsync() {
+                                dao.mostrarCharacterPerSpecies(getContext(), items, id);
+                                return true;
+                            }
+                        })
+                        .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                            @Override
+                            public void onResult(Object o) {
+                                adapter.addAll(items);
+                                listCharacter.setAdapter(adapter);
+
+                            }
+                        }).create().start();
+
+
 
             }
         });

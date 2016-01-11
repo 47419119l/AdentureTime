@@ -34,7 +34,7 @@
         android:defaultValue="musicaOn"
         android:entries="@array/tipus_consulta_titles"
         android:entryValues="@array/tipus_consulta_values"
-        android:key="musica"
+        android:key="musica_status"
         android:title="Musica"
             />
 

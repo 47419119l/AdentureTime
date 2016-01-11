@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.arasthel.asyncjob.AsyncJob;
+
 import java.util.ArrayList;
 
 public class Like extends AppCompatActivity {
@@ -42,19 +44,30 @@ public class Like extends AppCompatActivity {
                 R.layout.character_adapter_list,
                 items
         );
-        items = new ArrayList<>();
         listCharacter.setAdapter(adapter);
+
         listCharacter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                dao.eliminarLike(getBaseContext(),adapter.getItem(position).getId());
-                dao.mostrarLike(getBaseContext(), items);
-                adapter = new AdaptadorPersonalitzatCharacters(
-                        getBaseContext(),
-                        R.layout.character_adapter_list,
-                        items
-                );
-                listCharacter.setAdapter(adapter);
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                new AsyncJob.AsyncJobBuilder<Boolean>()
+                        .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                            @Override
+                            public Boolean doAsync() {
+                                Integer id = adapter.getItem(position).getId();
+                                items.clear();
+
+                                dao.eliminarLike(getBaseContext(), id);
+                                dao.mostrarLike(getBaseContext(), items);
+                                return true;
+                            }
+                        })
+                        .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                            @Override
+                            public void onResult(Object o) {
+                                adapter.notifyDataSetChanged();
+
+                            }
+                        }).create().start();
                 return false;
             }
         });
