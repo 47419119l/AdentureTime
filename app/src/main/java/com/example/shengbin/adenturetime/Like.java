@@ -38,12 +38,31 @@ public class Like extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         listCharacter = (ListView)findViewById(R.id.listlike);
         items = new ArrayList<>();
-        dao.mostrarLike(getBaseContext(), items);
+
         adapter = new AdaptadorPersonalitzatCharacters(
                 getBaseContext(),
                 R.layout.character_adapter_list,
                 items
         );
+        new AsyncJob.AsyncJobBuilder<Boolean>()
+                .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                    @Override
+                    public Boolean doAsync() {
+                        dao.mostrarLike(getBaseContext(), items);
+                        return true;
+                    }
+                })
+                .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                    @Override
+                    public void onResult(Object o) {
+                        adapter.notifyDataSetChanged();
+
+                    }
+                }).create().start();
+
+
+
+
         listCharacter.setAdapter(adapter);
 
         listCharacter.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

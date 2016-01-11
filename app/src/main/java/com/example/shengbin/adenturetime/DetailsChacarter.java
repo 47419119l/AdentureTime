@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.arasthel.asyncjob.AsyncJob;
 import com.example.shengbin.adenturetime.json.*;
 import com.example.shengbin.adenturetime.json.Character;
 import com.squareup.picasso.Picasso;
@@ -42,7 +43,17 @@ public class DetailsChacarter extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.altaLike(getBaseContext(), item.getId());
+                new AsyncJob.AsyncJobBuilder<Boolean>()
+                        .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                            @Override
+                            public Boolean doAsync() {
+                                db.altaLike(getBaseContext(), item.getId());
+                                return true;
+                            }
+
+                        }).create().start();
+
+
                 Snackbar.make(view, "Character saved", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
