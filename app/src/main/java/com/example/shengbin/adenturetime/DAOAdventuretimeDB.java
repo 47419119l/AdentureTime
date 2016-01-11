@@ -67,7 +67,17 @@ public class DAOAdventuretimeDB {
 
         }
         db.close();
-    }public void mostrarCharacterPerOcupation(Context context, ArrayList<Character> items, int name){
+    }
+
+    /**
+     *
+     * Omple un ArrayList amb els Registres de la taula ocupation amb el id character que se l'hi passa.
+     *
+     * @param context
+     * @param items
+     * @param name
+     */
+    public void mostrarCharacterPerOcupation(Context context, ArrayList<Character> items, int name){
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
