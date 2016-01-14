@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import com.example.shengbin.adenturetime.json.Episode;
@@ -50,14 +51,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,7 +65,8 @@ public class MainActivity extends AppCompatActivity
         Creo la BBDD.
          */
 
-        adventureTimeDbHelper admin = new adventureTimeDbHelper(getBaseContext(),"adventuretime",null,1);
+
+        adventureTimeDbHelper admin = new adventureTimeDbHelper(this,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
         musica = MediaPlayer.create(getBaseContext(), R.raw.piano);

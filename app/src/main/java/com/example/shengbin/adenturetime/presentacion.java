@@ -18,6 +18,7 @@ public class presentacion extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_presentacion);
      
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

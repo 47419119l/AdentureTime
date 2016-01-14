@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.arasthel.asyncjob.AsyncJob;
 import com.example.shengbin.adenturetime.json.*;
 import com.squareup.picasso.Picasso;
 
@@ -101,15 +102,14 @@ public class Episodes extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        TextView titul;
-        TextView descripcio;
-        ImageView image;
+
         ArrayList <Episode>episodes = new ArrayList<Episode>();
         DAOAdventuretimeDB db = new DAOAdventuretimeDB();
 
 
-        static Context context;
+        Context context;
         int position ;
+
 
         public PlaceholderFragment() {
             this.context=getContext();
@@ -119,6 +119,9 @@ public class Episodes extends AppCompatActivity {
             super.onCreate(savedInstanceState);
 
             db.mostrarEpisodes(getContext(),episodes);
+
+
+
 
 
         }
@@ -165,7 +168,7 @@ public class Episodes extends AppCompatActivity {
                     R.layout.character_adapter_list,
                     items
             );
-            items = new ArrayList<>();
+
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

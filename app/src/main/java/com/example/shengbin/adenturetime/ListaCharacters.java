@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.arasthel.asyncjob.AsyncJob;
 import com.example.shengbin.adenturetime.json.*;
@@ -31,6 +32,8 @@ public class ListaCharacters extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("");
         ListView listCharacter = (ListView)findViewById(R.id.listView);
+        ProgressBar progress = (ProgressBar) findViewById(R.id.progressChar);
+
         items = new ArrayList<>();
         adapter = new AdaptadorPersonalitzatCharacters(
                 getBaseContext(),
@@ -65,5 +68,7 @@ public class ListaCharacters extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        listCharacter.setEmptyView(progress);
     }
 }

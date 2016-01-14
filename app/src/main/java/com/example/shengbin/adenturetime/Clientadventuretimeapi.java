@@ -1,7 +1,9 @@
 package com.example.shengbin.adenturetime;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.arasthel.asyncjob.AsyncJob;
 import com.example.shengbin.adenturetime.json.*;
@@ -51,65 +53,72 @@ public class Clientadventuretimeapi {
          *
          */
 
-            for (int i =1; i<100; i++) {
-                Call<Character> advtCall = service.characters(String.valueOf(i));
+        final ProgressDialog progress;
 
-                advtCall.enqueue(new Callback<Character>() {
+        //progress = ProgressDialog.show(context, "Loading characters",
+        //        "Loading characters", true);
+        new AsyncJob.AsyncJobBuilder<Boolean>()
+                .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
                     @Override
-                    public void onResponse(final Response<Character> response, Retrofit retrofit) {
-                        new AsyncJob.AsyncJobBuilder<Boolean>()
-                                .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
-                                    @Override
-                                    public Boolean doAsync() {
-                                        if (response.isSuccess()) {
-                                            Character character = response.body();
-                            /*
-                            Si no té imatge no l'afguim al adptador si té imatge si.
-                             */
-                                            if (character.getImage().equals("")) {
+                    public Boolean doAsync() {
 
-                                            } else {
+                    for (int i =1; i<100; i++) {
+                        Call<Character> advtCall = service.characters(String.valueOf(i));
+
+                        advtCall.enqueue(new Callback<Character>() {
+                            @Override
+                            public void onResponse(final Response<Character> response, Retrofit retrofit) {
+
+                                                if (response.isSuccess()) {
+                                                    Character character = response.body();
                                     /*
-                                    Insertem el caracter a la bbdd
+                                    Si no té imatge no l'afguim al adptador si té imatge si.
                                      */
-                                                bd.altaCharacter(context, character.getId(), character.getName(), character.getSex(), character.getFullName(), character.getCreated(), character.getImage());
-                                   /*
-                                   Insertem las species
-                                    */
-                                                for(Species species :character.getSpecies()){
+                                                    if (character.getImage().equals("")) {
 
-                                                    bd.altaSpecies(context,character.getId(),species.getId(),species.getName());
+                                                    } else {
+                                            /*
+                                            Insertem el caracter a la bbdd
+                                             */
+                                                        bd.altaCharacter(context, character.getId(), character.getName(), character.getSex(), character.getFullName(), character.getCreated(), character.getImage());
+                                           /*
+                                           Insertem las species
+                                            */
+                                                        for(Species species :character.getSpecies()){
+
+                                                            bd.altaSpecies(context,character.getId(),species.getId(),species.getName());
+                                                        }
+                                            /*
+                                            Insertem las occupation
+                                             */
+                                                        for(Occupation occupation : character.getOccupations()){
+                                                            bd.altaOcupation(context,character.getId(),occupation.getId(),occupation.getTitle());
+                                                        }
+
+                                                    }
                                                 }
-                                    /*
-                                    Insertem las occupation
-                                     */
-                                                for(Occupation occupation : character.getOccupations()){
-                                                    bd.altaOcupation(context,character.getId(),occupation.getId(),occupation.getTitle());
-                                                }
-
-                                            }
-                                        }
-                                        return true;
-                                    }
-                                })
-                                .doWhenFinished(new AsyncJob.AsyncResultAction() {
-                                    @Override
-                                    public void onResult(Object o) {
-
-
-                                    }
-                                }).create().start();
 
 
 
+
+                            }
+
+                            @Override
+                            public void onFailure(Throwable t) {
+                                Log.w(null, Arrays.toString(t.getStackTrace()));
+                            }
+                        });
                     }
+                    return true;
+                }
+            })
+        .doWhenFinished(new AsyncJob.AsyncResultAction() {
+            @Override
+            public void onResult(Object o) {
+                //progress.dismiss();
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        Log.w(null, Arrays.toString(t.getStackTrace()));
-                    }
-                });
             }
+        }).create().start();
     }
 
 
@@ -121,61 +130,64 @@ public class Clientadventuretimeapi {
          * per tant farem una crida als primer 50 episodis.
          *
          */
+        final ProgressDialog progress;
+        //progress = ProgressDialog.show(context, "Loading characters",
+         //       "Loading characters", true);
+        new AsyncJob.AsyncJobBuilder<Boolean>()
+                .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                    @Override
+                    public Boolean doAsync() {
 
-        for (int i =1; i<50; i++) {
-            Call<Episode> advtCall = service.episodes(String.valueOf(i));
+                        for (int i =1; i<50; i++)
+                        {
+                            Call<Episode> advtCall = service.episodes(String.valueOf(i));
 
-            advtCall.enqueue(new Callback<Episode>() {
-                @Override
-                public void onResponse(final Response<Episode> response, Retrofit retrofit) {
-                    new AsyncJob.AsyncJobBuilder<Boolean>()
-                            .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                            advtCall.enqueue(new Callback<Episode>() {
                                 @Override
-                                public Boolean doAsync() {
+                                public void onResponse(final Response<Episode> response, Retrofit retrofit)
+                                {
 
-                                    if (response.isSuccess()) {
+                                                    if (response.isSuccess()) {
 
-                                        Episode episode = response.body();
+                                                        Episode episode = response.body();
 
-                                        /*
-                                        Si no té imatge no l'afguim al adptador si té imatge si.
-                                         */
-                                        if (episode.getTitleCard().equals("")) {
+                                                        /*
+                                                        Si no té imatge no l'afguim al adptador si té imatge si.
+                                                         */
+                                                        if (episode.getTitleCard().equals("")) {
 
-                                        } else {
-                                        /*
-                                        Insertem episodi
-                                         */
-                                            bd.altaEpisode(context,episode.getId(),episode.getTitle(),episode.getTitleCard(),episode.getDescription());
+                                                        } else {
+                                                        /*
+                                                        Insertem episodi
+                                                         */
+                                                            bd.altaEpisode(context,episode.getId(),episode.getTitle(),episode.getTitleCard(),episode.getDescription());
 
-                                        /*
-                                        Insertem els characters de cada episodi.
-                                         */
-                                            for(Character character : episode.getCharacters()){
-                                                bd.altaEpi_char(context, character.getId(),episode.getId());
-                                            }
-                                        }
-                                    }
-                                    return true;
-                                }
-                            })
-                            .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                                                        /*
+                                                        Insertem els characters de cada episodi.
+                                                         */
+                                                            for(Character character : episode.getCharacters()){
+                                                                bd.altaEpi_char(context, character.getId(),episode.getId());
+                                                            }
+                                                        }
+                                                    }
+                            }
+
                                 @Override
-                                public void onResult(Object o) {
-
+                                public void onFailure(Throwable t) {
+                                    Log.w(null, Arrays.toString(t.getStackTrace()));
                                 }
-                            }).create().start();
+                            });
+                        }
+                        return true;
+                    }
+                })
+                .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                    @Override
+                    public void onResult(Object o) {
+                        //progress.dismiss();
 
-
-
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    Log.w(null, Arrays.toString(t.getStackTrace()));
-                }
-            });
-        }
+                    }
+                }).create().start();
 
     }
 

@@ -39,6 +39,7 @@ public class adventureTimeDbHelper extends SQLiteOpenHelper {
          Cridem a la Api per a fer els inserts a la BBDD.
          */
         Clientadventuretimeapi apiClient = new Clientadventuretimeapi();
+
         apiClient.getCharacters(context);
         apiClient.getEpisodes(context);
 
