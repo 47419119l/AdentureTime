@@ -1,5 +1,6 @@
 package com.example.shengbin.adenturetime;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -105,7 +106,7 @@ public class Episodes extends AppCompatActivity {
 
         ArrayList <Episode>episodes = new ArrayList<Episode>();
         DAOAdventuretimeDB db = new DAOAdventuretimeDB();
-
+        ProgressDialog progress;
 
         Context context;
         int position ;
@@ -117,13 +118,7 @@ public class Episodes extends AppCompatActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
-            db.mostrarEpisodes(getContext(),episodes);
-
-
-
-
-
+                db.mostrarEpisodes(getContext(), episodes);
         }
         public void  past (){
              this.position= -1;
@@ -158,7 +153,7 @@ public class Episodes extends AppCompatActivity {
 
                 atras.setVisibility(View.VISIBLE);
             }
-            int poscion = position -1;
+            final int poscion = position -1;
 
 
 
@@ -170,13 +165,28 @@ public class Episodes extends AppCompatActivity {
             titul.setText(episodes.get(poscion).getTitle());
             getActivity().setTitle("");
             descripcio.setText(episodes.get(poscion).getDescription());
-            ArrayList items = new ArrayList<>();
-            db.mostrarEpisodeCharacter(getContext(),items,episodes.get(poscion).getId());
+
+            final ArrayList items = new ArrayList<>();
             final AdaptadorPersonalitzatCharacters adapter = new AdaptadorPersonalitzatCharacters(
                     getContext(),
                     R.layout.character_adapter_list,
                     items
             );
+            new AsyncJob.AsyncJobBuilder<Boolean>()
+                    .doInBackground(new AsyncJob.AsyncAction<Boolean>() {
+                        @Override
+                        public Boolean doAsync() {
+                            db.mostrarEpisodeCharacter(getContext(),items,episodes.get(poscion).getId());
+                            return true;
+                        }
+                    })
+                    .doWhenFinished(new AsyncJob.AsyncResultAction() {
+                        @Override
+                        public void onResult(Object o) {
+                            adapter.notifyDataSetChanged();
+
+                        }
+                    }).create().start();
 
             list.setAdapter(adapter);
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
