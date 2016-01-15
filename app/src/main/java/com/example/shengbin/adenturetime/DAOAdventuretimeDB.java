@@ -34,8 +34,8 @@ public class DAOAdventuretimeDB {
 
         adventureTimeDbHelper admin = new adventureTimeDbHelper(context,"adventuretime",null,1);
         SQLiteDatabase db = admin.getWritableDatabase();
-
-        Cursor c = db.rawQuery("SELECT CHARACTERS.ID, CHARACTERS.NAME, CHARACTERS.SEX, CHARACTERS.FULL_NAME, CHARACTERS.CREATED, CHARACTERS.IMAGE " +
+        items.clear();
+        Cursor c = db.rawQuery("SELECT  CHARACTERS.ID, CHARACTERS.NAME, CHARACTERS.SEX, CHARACTERS.FULL_NAME, CHARACTERS.CREATED, CHARACTERS.IMAGE " +
                 "FROM " +
                 "( CHARACTERS " +
                 " JOIN CHA_SPECIES " +

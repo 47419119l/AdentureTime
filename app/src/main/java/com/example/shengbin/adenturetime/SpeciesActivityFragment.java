@@ -95,7 +95,6 @@ public class SpeciesActivityFragment extends Fragment {
                         .doWhenFinished(new AsyncJob.AsyncResultAction() {
                             @Override
                             public void onResult(Object o) {
-                                adapter.addAll(items);
                                 listCharacter.setAdapter(adapter);
 
                             }
@@ -105,7 +104,7 @@ public class SpeciesActivityFragment extends Fragment {
 
             }
         });
-        
+
         listCharacter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

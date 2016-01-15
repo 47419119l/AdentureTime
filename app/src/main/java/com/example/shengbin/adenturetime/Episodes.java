@@ -150,7 +150,16 @@ public class Episodes extends AppCompatActivity {
             View rootView = inflater.inflate(R.layout.fragment_episodes, container, false);
 
             position = getArguments().getInt(ARG_SECTION_NUMBER);
+
+            ImageView atras = (ImageView)rootView.findViewById(R.id.atras);
+            if(position == 1){
+                atras.setVisibility(View.GONE);
+            }else{
+
+                atras.setVisibility(View.VISIBLE);
+            }
             int poscion = position -1;
+
 
 
             // Instanciem els objectes del layaot
@@ -177,6 +186,7 @@ public class Episodes extends AppCompatActivity {
                     Intent i = new Intent(getContext(), DetailsChacarter.class);
                     i.putExtra("item", adapter.getItem(position));
                     startActivity(i);
+
                 }
             });
             Picasso.with(getContext())

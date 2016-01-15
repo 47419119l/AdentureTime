@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Follow finn and jake in their adventures"
+            android:text="Follow finn and jake in their adventures."
             android:id="@+id/textView2"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
@@ -55,7 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="&quot;Whoa! Algebraic!&quot;"
+            android:text="&quot; Whoa! Algebraic! &quot;"
             android:id="@+id/textView3"
             android:layout_marginTop="41dp"
             android:layout_below="@+id/textView2"
